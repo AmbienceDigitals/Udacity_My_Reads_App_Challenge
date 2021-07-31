@@ -38,8 +38,8 @@ class Read extends Component {
                     <div className="book-authors">{book.authors} </div>
                     </div>
                 </li>
-                )
-            })}
+                )}
+            )}
                 </ol>
                 </div>
             </div>

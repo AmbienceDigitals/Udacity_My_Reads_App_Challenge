@@ -27,20 +27,9 @@ componentDidMount() {
 fetchAllBooks=()=>{
   console.log("Ambience BooksApp fetchAllBooks called " )
   BooksAPI.getAll().then((books) => {
-
-
-      let hashTable = {}
-      books.forEach(function(book){
-        hashTable[book.id] = book.shelf
-      });
-      let updatedShelfForSearchedBooks = this.state.searchResults
-      updatedShelfForSearchedBooks.forEach(
-        (book) => book.shelf = hashTable[book.id]  || 'none'
-      )
-
       this.setState({ 
         books: books,
-        searchResults:updatedShelfForSearchedBooks
+        searchResults: this.state.searchResults
       })
   })
 }
@@ -49,17 +38,20 @@ fetchAllBooks=()=>{
   updateBook=(book,shelf)=> {
 		
 		console.log("Ambience updateBook : "  + book.title + "  " + shelf)
-		BooksAPI.update(book,shelf).then(()=>{
+		BooksAPI.update(book, shelf).then(()=>{
       if(shelf === 'read') {
         this.setState( {
           books: this.state.books,
-          reads: this.state.read.push(book),
-          book: this.state.book
+          reads: this.state.read.push(book)
         });
-        console.log(this.state.book);
-
       }
-      this.fetchAllBooks()
+      else if(shelf === 'wantToRead') {
+        this.setState( {
+          books: this.state.books,
+          wantToReads: this.state.wantToRead.push(book)
+        });
+        console.log({shelf})
+      }
 	})
 }
 
@@ -78,13 +70,13 @@ fetchAllBooks=()=>{
               <div>
                 <CurrentlyReading
                 books={this.state.books}
-                updateBook={this.updateBook}
-                book={this.state.book}>
+                updateBook={this.updateBook}>
                 </CurrentlyReading>
                 <WantToRead
-                ></WantToRead>
+                wantToRead={this.state.wantToRead}
+                updateBook={this.updateBook}>
+                </WantToRead>
                 <Read
-                book={this.state.book}
                 read={this.state.read}
                 updateBook={this.updateBook}>
                 </Read>

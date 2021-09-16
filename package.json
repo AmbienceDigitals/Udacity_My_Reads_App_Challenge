@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@babel/eslint-parser": "^7.15.0",
     "escape-string-regexp": "^5.0.0",
     "prop-types": "^15.6.2",
     "react": "^16.6.3",
@@ -25,5 +26,9 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "babel-eslint": "^9.0.0",
+    "eslint": "^4.19.1"
+  }
 }
